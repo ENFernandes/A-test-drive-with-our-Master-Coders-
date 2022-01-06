@@ -103,7 +103,7 @@ var bStage = engine.create({
 });
 
 /** Welcome Banner **/
-bStage.executeBefore(function() {
+bStage.executeBefore(function () {
   gameOver.gameOver(fear, bountyValue, forcePower);
   engine.showBanner('Welcome Jedi');
   engine.showBanner('Game Rules');
@@ -115,7 +115,7 @@ bStage.executeBefore(function() {
 bStage.addQuestion({
   type: 'input',
   message: 'What do you want to call yourself future jedi Knight?',
-  action: function(answer) {
+  action: function (answer) {
     jediName = answer;
     console.clear();
     engine.showBanner('Jedi Room\'s');
@@ -134,7 +134,7 @@ bStage.addQuestion({
 
 function level1() {
 
-/***JEDI TEMPLE***/
+  /***JEDI TEMPLE***/
   var jediTemple = engine.create({
     type: 'stage',
     name: 'Jedi Temple',
@@ -142,7 +142,7 @@ function level1() {
   );
 
   /**Before jediTemple **/
-  jediTemple.executeBefore(function() {
+  jediTemple.executeBefore(function () {
     console.clear();
     engine.showBanner('Jedi Temple');
     console.log('\nThis moment your Force power is: ' + forcePower + '\nThis moment your fear is: ' + fear);
@@ -154,7 +154,7 @@ function level1() {
     type: 'list',
     message: '\n\nThe number of hours you want to be connecting with Force? \n8h = +10 fear / +15 Fpower \n16h = +25 fear / +30 Fpower \n24h = +60 fear / +45 Fpower\n',
     options: ['8', '16', '24'],
-    action: function(answer) {
+    action: function (answer) {
 
       /*conditions of the fear*/
       vFear.vFear(fear, auxFear);
@@ -176,9 +176,8 @@ function level1() {
           fear = fear + 60;
           break;
       }
-      if(!vLevel2)
-      {
-      if (rLevel[0] != 1) rLevel[0] = 1;
+      if (!vLevel2) {
+        if (rLevel[0] != 1) rLevel[0] = 1;
       }
       //Verificação medo
     },
@@ -186,7 +185,7 @@ function level1() {
   /*End Input jediTemple*/
 
   /**After jediTemple **/
-  jediTemple.executeAfter(function() {
+  jediTemple.executeAfter(function () {
     console.clear();
     var isGameOver = gameOver.gameOver(fear, bountyValue, forcePower);
     if (isGameOver) {
@@ -221,7 +220,7 @@ function level1() {
 
 
   /*Before Cantina*/
-  cantina.executeBefore(function() {
+  cantina.executeBefore(function () {
     console.clear();
     engine.showBanner('Cantine');
     console.log('\nThis moment your Force power is: ' + forcePower + '\nThis moment your fear is: ' + fear + '\nThis moment your Vulnerabilities is: ' + vulnerabilities + '\n\n');
@@ -233,7 +232,7 @@ function level1() {
     type: 'list',
     message: '\n In this room you will have to make decisions that will definitely affect your journey to becoming a Jedi King.\n Make a wise decision depending on your current state.\n May the force be with YOU!\n',
     options: ['Use Jedi Minf Trinck?', 'Search for vulnerabilities', 'End Cantine'],
-    action: function(answer) {
+    action: function (answer) {
       switch (answer) {
         case 'Use Jedi Minf Trinck?':
           if (bountyValue != 0) {
@@ -255,7 +254,7 @@ function level1() {
           bountyValue = bountyValue + auxBV;
           console.clear();
           engine.showBanner('Cantine');
-          prompt('To win ' + auxV + ' vulnerabilities and win bounty value is '+auxBV+'\nThis moment your vulnerabilities is:' + vulnerabilities + '\nThis moment your bounty value is:' + bountyValue );
+          prompt('To win ' + auxV + ' vulnerabilities and win bounty value is ' + auxBV + '\nThis moment your vulnerabilities is:' + vulnerabilities + '\nThis moment your bounty value is:' + bountyValue);
           if (rLevel[2] != 1) rLevel[2] = 1;
           break;
 
@@ -271,7 +270,7 @@ function level1() {
 
 
   /**After cantine **/
-  cantina.executeAfter(function() {
+  cantina.executeAfter(function () {
     console.clear();
     var isGameOver = gameOver.gameOver(fear, bountyValue, forcePower);
     if (isGameOver) {
@@ -290,16 +289,16 @@ function level1() {
       vLevel1 = false;
       vLevel2 = axvLevel;
       game();
-      rLevel[0]=0;
+      rLevel[0] = 0;
       axvLevel = false;
     }
-    vForcePower.vForcePower(forcePower,vLevel1,vLevel2);
+    vForcePower.vForcePower(forcePower, vLevel1, vLevel2);
   });
   /**End After cantine **/
   /***CANTINA***/
 }
 
-/*function level2() {
+function level2() {
   if (vLevel2) {
     var ahchTo = engine.create({
       type: 'stage',
@@ -307,34 +306,93 @@ function level1() {
     }
     );
   }
+  ahchTo.addQuestion({
+    type: 'list',
+    message: '\n\nThe number of hours you want to be connecting with Ahch-to? \n8h = +10 fear / +15 Fpower \n16h = +25 fear / +30 Fpower \n24h = +60 fear / +45 Fpower\n',
+    options: ['2', '4', '6', '8'],
+    action: function (answer) {
 
-  if (vLevel2) {
-    var jediTraining = engine.create({
+      /*conditions of the fear*/
+      vFear.vFear(fear, auxFear);
+      /*end conditions of the fear*/
+
+      switch (answer) {
+        case '2':
+          forcePower = forcePower - 5;
+          fear = fear - 10;
+          break;
+
+        case '4':
+          forcePower = forcePower - 12;
+          fear = fear - 15;
+          break;
+
+        case '6':
+          forcePower = forcePower - 23;
+          fear = fear - 20;
+          break;
+        case '8':
+          forcePower = forcePower - 30;
+          fear = fear - 40;
+          break;
+      }
+      if (!vLevel3) {
+        if (rLevel[3] != 1) rLevel[3] = 1;
+      }
+      //Verificação medo
+    },
+  });
+
+  ahchTo.executeAfter(function () {
+    console.clear();
+    var isGameOver = gameOver.gameOver(fear, bountyValue, forcePower);
+    if (isGameOver) {
+      if (vLevel1) {
+        restart();
+      }
+      else {
+        console.clear();
+        engine.showBanner('GameOver');
+        engine.quit();
+      }
+    }
+
+    engine.showBanner('Jedi Room\'s');
+    var axvLevel = vLevel.vLevel(rLevel, vLevel2);
+    if (axvLevel) {
+      vLevel1 = false;
+      vLevel2 = axvLevel;
+    }
+
+  });
+  /*
+    if (vLevel2) {
+      var jediTraining = engine.create({
+        type: 'stage',
+        name: 'Jedi Training',
+      }
+      );
+    }
+  
+  }
+  
+  function level3() {
+    var starDestroyer = engine.create({
       type: 'stage',
-      name: 'Jedi Training',
+      name: 'Star Destroyer',
     }
     );
+  }*/
+
+
+
+  function game() {
+    if (vLevel1) level1(); //Stage leve I 
+    else if (vLevel2) level2(); //Stage leve II
+    else if (vLevel3) level3(); //Stage leve III
   }
 
-}
 
-function level3() {
-  var starDestroyer = engine.create({
-    type: 'stage',
-    name: 'Star Destroyer',
-  }
-  );
-}*/
-
-
-
-function game() {
-  if (vLevel1) level1(); //Stage leve I 
-  else if (vLevel2) level2(); //Stage leve II
-  else if (vLevel3) level3(); //Stage leve III
-}
-
-
-engine.run();
+  engine.run();
 
 
