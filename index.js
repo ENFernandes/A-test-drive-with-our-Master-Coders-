@@ -299,7 +299,7 @@ function level1() {
 }
 
 function level2() {
-
+/** Ahch-to **/
   var ahchTo = engine.create({
     type: 'stage',
     name: 'Ahch-To',
@@ -346,27 +346,39 @@ function level2() {
       //Verificação medo
     },
   });
-
   ahchTo.executeAfter(function () {
     console.clear();
     var isGameOver = gameOver.gameOver(fear, bountyValue, forcePower);
     if (isGameOver) {
-        console.clear();
-        engine.showBanner('GameOver');
-        engine.quit();
+      console.clear();
+      engine.showBanner('GameOver');
+      engine.quit();
     }
   });
-  /*
-    if (vLevel2) {
-      var jediTraining = engine.create({
-        type: 'stage',
-        name: 'Jedi Training',
-      }
-      );
-    }
-  
-  }*/
+/**End Ahch-to **/
+
+/**jedi Training **/
+if (jediKnight)
+  var jediTraining = engine.create({
+    type: 'stage',
+    name: 'Jedi Training',
+  }
+  );
+  jediTraining.executeBefore(function(){
+    console.clear();
+    engine.showBanner("Jedi Training");
+  });
+  jediTraining.addQuestion({
+    message: "\n This moment your Force power is:  %s  \nThis moment your fear is: %s" , forcePower, fear,
+  });
+  jediTraining.executeBefore(function(){
+    console.clear();
+    engine.showBanner('Jedi Training');
+    console.log('\nThis moment your Force power is: ' + forcePower + '\nThis moment your fear is: ' + fear);
+  });
 }
+/**End jedi Training **/
+
 
 /*function level3() {
   var starDestroyer = engine.create({
