@@ -1,6 +1,6 @@
 /*****Beginning Game*****/
 /**Var ordinari**/
-var engine = require('workshop-engine');
+var engine = require('../workshop-engine');
 var jediName; // your Jedi name
 var forcePower = 0; // force power gained meditating at the Jedi Temple
 var bountyValue = 0; // starts at 0, if it reaches 100 you get busted and lose the game
@@ -8,13 +8,13 @@ var fear = 0; // starts at 0, if it reaches 100 you join the Dark side and lose 
 var vulnerabilities = 0; // number of vulnerabilities found
 var jediKnight = false; // boolean to indicate if the player has reached Jedi knight level
 var hitpoints = 30 // your current hitpoints
-var ancientTexts = [
+/*var ancientTexts = [
   { chapter: 1, technique: '□Fo□□rc□e L□ea□p□□' },
   { chapter: 2, technique: 'T□ra□□n□□□s□fe□r F□o□rc□e□□' },
   { chapter: 3, technique: 'Fo□□rc□e B□urs□t' },
   { chapter: 4, technique: '□□M□alac□i□a' },
   { chapter: 5, technique: '□Fo□rce□□ We□a□□po□n' }
-];
+];*/
 var sithLord = {
   name: 'Darth Tekman',
   hitpoints: 45,
@@ -22,32 +22,30 @@ var sithLord = {
 };
 /**Var ordinari**/
 
-/**My thing**/
-
-/**My var global**/
+/***MY THINGS***/
+/**MY VAR GLOBAL**/
 
 /*require*/
-
 var gameOver = require("./gameOver");
 var vFear = require("./carateristicas/vfear");
 var vLevel = require("./carateristicas/vLevel");
 var vBountyValue = require("./carateristicas/vBountyValue");
+var vForcePower = require("./carateristicas/vForcePower");
+var rauxForcePower = require("./carateristicas/rauxForcePower")
 /*end require*/
 
 var vLevel1 = true;
 var vLevel2 = false;
 var vLevel3 = false;
-var beginning = 0;
 var auxFear = 0;
 
 /*array's*/
 var rLevel = [0, 0, 0, 0, 0];
 /*end array's*/
+/**END MY VAR GLOBAL**/
+/***END MY THINGS***/
 
-/*end my var global*/
-
-/*Restart?*/
-
+/*Restart*/
 function restart() {
   var answer = prompt('\nTry again?(Y/n)\n');
   switch (answer) {
@@ -62,13 +60,13 @@ function restart() {
       vulnerabilities = 0; // number of vulnerabilities found
       jediKnight = false; // boolean to indicate if the player has reached Jedi knight level
       hitpoints = 30 // your current hitpoints
-      ancientTexts = [
+      /*ancientTexts = [
         { chapter: 1, technique: '□Fo□□rc□e L□ea□p□□' },
         { chapter: 2, technique: 'T□ra□□n□□□s□fe□r F□o□rc□e□□' },
         { chapter: 3, technique: 'Fo□□rc□e B□urs□t' },
         { chapter: 4, technique: '□□M□alac□i□a' },
         { chapter: 5, technique: '□Fo□rce□□ We□a□□po□n' }
-      ];
+      ];*/
       sithLord = {
         name: 'Darth Tekman',
         hitpoints: 45,
@@ -96,36 +94,9 @@ function restart() {
 }
 /*end Restart*/
 
-
-
-/* Verify Force Power */
-
-function vForcePower() {
-
-  if (forcePower < 0) {
-    forcePower = 0;
-    prompt('CAREFUL your Force Power is 0, go the Jedi Temple');
-    vLevel1 = true;
-    vLevel2 = false;
-  }
-}
-
-/* End Verify Force Power */
-
-
-/*Random ForcePower*/
-function rauxForcePower(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-/*end random forcePower*/
-
-
-/*End My function for the program*/
-
 /**End My thing**/
 
-/*****Before Stage******/
-
+/***** BEFORE STAGE ******/
 var bStage = engine.create({
   type: 'before',
   name: 'BStage',
@@ -154,7 +125,7 @@ bStage.addQuestion({
 })
 /**End AddName Jedi **/
 
-/*****End Before Stage******/
+/*****END BEFORE STAGE ******/
 
 
 
@@ -163,12 +134,12 @@ bStage.addQuestion({
 
 function level1() {
 
+/***JEDI TEMPLE***/
   var jediTemple = engine.create({
     type: 'stage',
     name: 'Jedi Temple',
   }
   );
-  /**Jedi Temple **/
 
   /**Before jediTemple **/
   jediTemple.executeBefore(function() {
@@ -239,11 +210,9 @@ function level1() {
   });
   /**End After jediTemple **/
 
+  /***END JEDI TEMPLE***/
 
-  /**end jedi temple**/
-
-
-  /**Cantina **/
+  /***CANTINA***/
   var cantina = engine.create({
     type: 'stage',
     name: 'Cantina',
@@ -268,7 +237,7 @@ function level1() {
       switch (answer) {
         case 'Use Jedi Minf Trinck?':
           if (bountyValue != 0) {
-            var auxfp = rauxForcePower(15, 45);
+            var auxfp = rauxForcePower.rauxForcePower(15, 45);
             forcePower = forcePower - auxfp;
             bountyValue = bountyValue - auxfp;
             console.clear();
@@ -280,9 +249,9 @@ function level1() {
 
 
         case 'Search for vulnerabilities':
-          var auxV = rauxForcePower(25, 65);
+          var auxV = rauxForcePower.rauxForcePower(25, 65);
           vulnerabilities = vulnerabilities + auxV
-          var auxBV = rauxForcePower(15, 45);
+          var auxBV = rauxForcePower.rauxForcePower(15, 45);
           bountyValue = bountyValue + auxBV;
           console.clear();
           engine.showBanner('Cantine');
@@ -324,13 +293,13 @@ function level1() {
       rLevel[0]=0;
       axvLevel = false;
     }
-    vForcePower();
+    vForcePower.vForcePower(forcePower,vLevel1,vLevel2);
   });
   /**End After cantine **/
-  /**end Cantina */
+  /***CANTINA***/
 }
 
-function level2() {
+/*function level2() {
   if (vLevel2) {
     var ahchTo = engine.create({
       type: 'stage',
@@ -355,7 +324,7 @@ function level3() {
     name: 'Star Destroyer',
   }
   );
-}
+}*/
 
 
 
