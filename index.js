@@ -48,7 +48,7 @@ var rLevel = [0, 0, 0, 0, 0];
 
 /*Restart?*/
 
-function restart(gameOver) {
+function restart() {
   var answer = prompt('\nTry again?(Y/n)\n');
   switch (answer) {
     case 'Y':
@@ -89,7 +89,7 @@ function restart(gameOver) {
 
     default:
       console.log('The option is not valid');
-      restart(1);
+      restart();
       break;
   }
 
@@ -108,7 +108,7 @@ function vForcePower() {
     vLevel1 = true;
     vLevel2 = false;
   }
-};
+}
 
 /* End Verify Force Power */
 
@@ -133,7 +133,7 @@ var bStage = engine.create({
 
 /** Welcome Banner **/
 bStage.executeBefore(function() {
-  var isGameOver = gameOver.gameOver(fear, bountyValue, forcePower);
+  gameOver.gameOver(fear, bountyValue, forcePower);
   engine.showBanner('Welcome Jedi');
   engine.showBanner('Game Rules');
   console.log('- Defeat the Sith Lord to win\n- Find vulnerabilities to infiltrate the Star Destroyer\n- Learn force techniques through ancient texts\n- All of your actions will increase your fear\n- If your bounty value or fear reaches 100, you lose\n- If your fear becomes higher than 70, you are experienced enough and become a Jedi Knight  ');
@@ -229,11 +229,11 @@ function level1() {
       }
     }
 
-    //engine.showBanner('Jedi Room\'s');
+    engine.showBanner('Jedi Room\'s');
     var axvLevel = vLevel.vLevel(rLevel, vLevel2);
-    if (axvLevel == true) {
-      vlevel1 = false;
-      vlevel2 = axvLevel;
+    if (axvLevel) {
+      vLevel1 = false;
+      vLevel2 = axvLevel;
     }
 
   });
@@ -317,7 +317,7 @@ function level1() {
     }
     engine.showBanner('Jedi Room\'s');
     var axvLevel = vLevel.vLevel(rLevel);
-    if (axvLevel == true) {
+    if (axvLevel) {
       vLevel1 = false;
       vLevel2 = axvLevel;
       game();
@@ -331,7 +331,7 @@ function level1() {
 }
 
 function level2() {
-  if (vLevel2 == true) {
+  if (vLevel2) {
     var ahchTo = engine.create({
       type: 'stage',
       name: 'Ahch-To',
@@ -339,7 +339,7 @@ function level2() {
     );
   }
 
-  if (vLevel2 == true) {
+  if (vLevel2) {
     var jediTraining = engine.create({
       type: 'stage',
       name: 'Jedi Training',
