@@ -299,13 +299,17 @@ function level1() {
 }
 
 function level2() {
-  if (vLevel2) {
-    var ahchTo = engine.create({
-      type: 'stage',
-      name: 'Ahch-To',
-    }
-    );
+
+  var ahchTo = engine.create({
+    type: 'stage',
+    name: 'Ahch-To',
   }
+  );
+  ahchTo.executeBefore(function () {
+    console.clear();
+    engine.showBanner('Ahch-To');
+    console.log('\nThis moment your Force power is: ' + forcePower + '\nThis moment your fear is: ' + fear);
+  });
   ahchTo.addQuestion({
     type: 'list',
     message: '\n\nThe number of hours you want to be connecting with Ahch-to? \n8h = +10 fear / +15 Fpower \n16h = +25 fear / +30 Fpower \n24h = +60 fear / +45 Fpower\n',
@@ -347,23 +351,10 @@ function level2() {
     console.clear();
     var isGameOver = gameOver.gameOver(fear, bountyValue, forcePower);
     if (isGameOver) {
-      if (vLevel1) {
-        restart();
-      }
-      else {
         console.clear();
         engine.showBanner('GameOver');
         engine.quit();
-      }
     }
-
-    engine.showBanner('Jedi Room\'s');
-    var axvLevel = vLevel.vLevel(rLevel, vLevel2);
-    if (axvLevel) {
-      vLevel1 = false;
-      vLevel2 = axvLevel;
-    }
-
   });
   /*
     if (vLevel2) {
@@ -374,25 +365,26 @@ function level2() {
       );
     }
   
-  }
-  
-  function level3() {
-    var starDestroyer = engine.create({
-      type: 'stage',
-      name: 'Star Destroyer',
-    }
-    );
   }*/
+}
 
-
-
-  function game() {
-    if (vLevel1) level1(); //Stage leve I 
-    else if (vLevel2) level2(); //Stage leve II
-    else if (vLevel3) level3(); //Stage leve III
+/*function level3() {
+  var starDestroyer = engine.create({
+    type: 'stage',
+    name: 'Star Destroyer',
   }
+  );
+}*/
 
 
-  engine.run();
+
+function game() {
+  if (vLevel1) level1(); //Stage leve I 
+  else if (vLevel2) level2(); //Stage leve II
+  else if (vLevel3) level3(); //Stage leve III
+}
+
+
+engine.run();
 
 
