@@ -8,13 +8,13 @@ var fear = 0; // starts at 0, if it reaches 100 you join the Dark side and lose 
 var vulnerabilities = 0; // number of vulnerabilities found
 var jediKnight = false; // boolean to indicate if the player has reached Jedi knight level
 var hitpoints = 30 // your current hitpoints
-/*var ancientTexts = [
+var ancientTexts = [
   { chapter: 1, technique: '□Fo□□rc□e L□ea□p□□' },
   { chapter: 2, technique: 'T□ra□□n□□□s□fe□r F□o□rc□e□□' },
   { chapter: 3, technique: 'Fo□□rc□e B□urs□t' },
   { chapter: 4, technique: '□□M□alac□i□a' },
   { chapter: 5, technique: '□Fo□rce□□ We□a□□po□n' }
-];*/
+];
 var sithLord = {
   name: 'Darth Tekman',
   hitpoints: 45,
@@ -299,7 +299,7 @@ function level1() {
 }
 
 function level2() {
-/** Ahch-to **/
+  /** Ahch-to **/
   var ahchTo = engine.create({
     type: 'stage',
     name: 'Ahch-To',
@@ -355,27 +355,88 @@ function level2() {
       engine.quit();
     }
   });
-/**End Ahch-to **/
+  /**End Ahch-to **/
 
-/**jedi Training **/
-if (jediKnight)
-  var jediTraining = engine.create({
-    type: 'stage',
-    name: 'Jedi Training',
+  /**jedi Training **/
+  if (jediKnight) {
+    var jediTraining = engine.create({
+      type: 'stage',
+      name: 'Jedi Training',
+    }
+    );
+    jediTraining.executeBefore(function () {
+      console.clear();
+      engine.showBanner("Jedi Training");
+      prompt("\n This moment your Force power is:  %s  \nThis moment your fear is: %s", forcePower, fear,);
+    });
+
+    jediTraining.addQuestion({
+      type: 'list',
+      message: 'Who do you want to learn a new technique from?',
+      option: ['Jar Jar Binks', 'Darth Vader', 'Luke Skywalker', 'R2-D2', 'C-3PO'],
+      action: function (answer) {
+        var auxop = 0;
+        switch (answer) {
+          case 'Jar Jar Binks':
+            auxop = rauxForcePower(0, 20);
+            break;
+
+          case 'Darth Vader':
+            auxop = rauxForcePower(60, 80);
+            break;
+
+          case 'Luke Skywalker':
+            auxop = rauxForcePower(80, 100);
+            break;
+
+          case 'R2-D2':
+            auxop = rauxForcePower(20, 40);
+            break;
+
+          case 'C-3PO':
+            auxop = rauxForcePower(40, 60);
+            break;
+        }
+        
+      }
+    });
+
+    jediTraining.addQuestion({
+      type: 'list',
+      message: 'Who do you want to second learn a new technique from?',
+      options: ['Jar Jar Binks', 'Darth Vader', 'Luke Skywalker', 'R2-D2', 'C-3PO'],
+      action: function (answer) {
+        var auxop1 = 0;
+        switch (answer) {
+          case 'Jar Jar Binks':
+            auxop1 = rauxForcePower(0, 20);
+            break;
+
+          case 'Darth Vader':
+            auxop1 = rauxForcePower(60, 80);
+            break;
+
+          case 'Luke Skywalker':
+            auxop1 = rauxForcePower(80, 100);
+            break;
+
+          case 'R2-D2':
+            auxop1 = rauxForcePower(20, 40);
+            break;
+
+          case 'C-3PO':
+            auxop1 = rauxForcePower(40, 60);
+            break;
+        }
+      }
+    });
+
+    jediTraining.executeAfter(function () {
+      console.clear();
+      engine.showBanner('Jedi Training');
+      console.log('\nThis moment your Force power is: ' + forcePower + '\nThis moment your fear is: ' + fear);
+    });
   }
-  );
-  jediTraining.executeBefore(function(){
-    console.clear();
-    engine.showBanner("Jedi Training");
-  });
-  jediTraining.addQuestion({
-    message: "\n This moment your Force power is:  %s  \nThis moment your fear is: %s" , forcePower, fear,
-  });
-  jediTraining.executeBefore(function(){
-    console.clear();
-    engine.showBanner('Jedi Training');
-    console.log('\nThis moment your Force power is: ' + forcePower + '\nThis moment your fear is: ' + fear);
-  });
 }
 /**End jedi Training **/
 
