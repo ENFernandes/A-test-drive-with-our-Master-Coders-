@@ -6,7 +6,6 @@ var forcePower = 0; // force power gained meditating at the Jedi Temple
 var bountyValue = 0; // starts at 0, if it reaches 100 you get busted and lose the game
 var fear = 0; // starts at 0, if it reaches 100 you join the Dark side and lose the game
 var vulnerabilities = 0; // number of vulnerabilities found
-var jediKnight = false; // boolean to indicate if the player has reached Jedi knight level
 var hitpoints = 30 // your current hitpoints
 var ancientTexts = [
   { chapter: 1, technique: '□Fo□□rc□e L□ea□p□□' },
@@ -41,6 +40,7 @@ var vLevel = require("./carateristicas/vLevel");
 var vBountyValue = require("./carateristicas/vBountyValue");
 var vForcePower = require("./carateristicas/vForcePower");
 var rauxForcePower = require("./carateristicas/rauxForcePower")
+var jediKnight = require("./carateristicas/jediKnight");
 /*end require*/
 
 var vLevel1 = true;
@@ -67,7 +67,7 @@ function restart() {
       bountyValue = 0; // starts at 0, if it reaches 100 you get busted and lose the game
       fear = 0; // starts at 0, if it reaches 100 you join the Dark side and lose the game
       vulnerabilities = 0; // number of vulnerabilities found
-      jediKnight = false; // boolean to indicate if the player has reached Jedi knight level
+      jediKnight.jediKnight() = false; // boolean to indicate if the player has reached Jedi knight level
       hitpoints = 30 // your current hitpoints
       /*ancientTexts = [
         { chapter: 1, technique: '□Fo□□rc□e L□ea□p□□' },
@@ -389,7 +389,7 @@ function level2() {
   /**End Ahch-to **/
 
   /**jedi Training **/
-  if (jediKnight) {
+  if (jediKnight.jediKnight(fear)) {
     var jediTraining = engine.create({
       type: 'stage',
       name: 'Jedi Training',
