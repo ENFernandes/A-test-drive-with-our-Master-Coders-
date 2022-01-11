@@ -15,6 +15,15 @@ var ancientTexts = [
   { chapter: 4, technique: '□□M□alac□i□a' },
   { chapter: 5, technique: '□Fo□rce□□ We□a□□po□n' }
 ];
+
+var techniques = [
+  {valor1: Valor},
+  {valor2: Valor},
+  {name1: Name , technique: 15},
+  {name2: Name, technique: 25},
+  {name3: 'Defence', technique: 0},
+];
+
 var sithLord = {
   name: 'Darth Tekman',
   hitpoints: 45,
@@ -94,6 +103,28 @@ function restart() {
 }
 /*end Restart*/
 
+/**Destroyer Techniques**/
+function decryptTechnique() {
+  var techLearned = [];
+  var y=0;
+    for (var i = 0; i < ancientTexts.length; i++) {
+      if (
+        ancientTexts[i].technique.replace(/□/g, '').length > 9 &&
+        ancientTexts[i].technique.replace(/□/g, '').length < 12 &&
+        ancientTexts[i].technique.replace(/□/g, '').indexOf(' ') >= 0
+      ) {
+        techLearned[i] = ancientTexts[i].technique.replace(/□/g, '');
+        y++;
+      }
+      else {
+        var filtered = techLearned.filter(function(x) {
+          return x !== undefined;
+        });
+      }
+    }
+    techniques.name[y] = filtered;
+}
+/**end Destroyer Techniques**/
 /**End My thing**/
 
 /***** BEFORE STAGE ******/
@@ -367,6 +398,7 @@ function level2() {
     jediTraining.executeBefore(function () {
       console.clear();
       engine.showBanner("Jedi Training");
+      decryptTechnique();
       prompt("\n This moment your Force power is:  %s  \nThis moment your fear is: %s", forcePower, fear,);
     });
 
@@ -375,29 +407,29 @@ function level2() {
       message: 'Who do you want to learn a new technique from?',
       option: ['Jar Jar Binks', 'Darth Vader', 'Luke Skywalker', 'R2-D2', 'C-3PO'],
       action: function (answer) {
-        var auxop = 0;
+        
         switch (answer) {
           case 'Jar Jar Binks':
-            auxop = rauxForcePower(0, 20);
+            technique.valor1 = rauxForcePower(0, 20);
             break;
 
           case 'Darth Vader':
-            auxop = rauxForcePower(60, 80);
+            technique.valor1 = rauxForcePower(60, 80);
             break;
 
           case 'Luke Skywalker':
-            auxop = rauxForcePower(80, 100);
+            technique.valor1 = rauxForcePower(80, 100);
             break;
 
           case 'R2-D2':
-            auxop = rauxForcePower(20, 40);
+            technique.valor1 = rauxForcePower(20, 40);
             break;
 
           case 'C-3PO':
-            auxop = rauxForcePower(40, 60);
+            technique.valor1 = rauxForcePower(40, 60);
             break;
         }
-        
+
       }
     });
 
@@ -406,26 +438,26 @@ function level2() {
       message: 'Who do you want to second learn a new technique from?',
       options: ['Jar Jar Binks', 'Darth Vader', 'Luke Skywalker', 'R2-D2', 'C-3PO'],
       action: function (answer) {
-        var auxop1 = 0;
+        
         switch (answer) {
           case 'Jar Jar Binks':
-            auxop1 = rauxForcePower(0, 20);
+            technique.valor2 = rauxForcePower(0, 20);
             break;
 
           case 'Darth Vader':
-            auxop1 = rauxForcePower(60, 80);
+            technique.valor2 = rauxForcePower(60, 80);
             break;
 
           case 'Luke Skywalker':
-            auxop1 = rauxForcePower(80, 100);
+            technique.valor2 = rauxForcePower(80, 100);
             break;
 
           case 'R2-D2':
-            auxop1 = rauxForcePower(20, 40);
+            technique.valor2 = rauxForcePower(20, 40);
             break;
 
           case 'C-3PO':
-            auxop1 = rauxForcePower(40, 60);
+            technique.valor2 = rauxForcePower(40, 60);
             break;
         }
       }
@@ -433,8 +465,24 @@ function level2() {
 
     jediTraining.executeAfter(function () {
       console.clear();
+      var valortraining =technique.valor2+technique.valor1;
       engine.showBanner('Jedi Training');
-      console.log('\nThis moment your Force power is: ' + forcePower + '\nThis moment your fear is: ' + fear);
+      prompt("You valor this training is: %i",valortraining);
+      if (valortraining/2 <60)
+      {
+        console.clear();
+        prompt("you didn't win any technique");
+      }
+      else if(valortraining/2 > 60 && valortraining/2 <80 )
+      {
+        console.clear();
+        prompt("You have won the technique: %s and the technique: %s", techniques.name1, techniques.name3);
+      }
+      else if(valortraining/2 > 80)
+      {
+        console.clear();
+        prompt("You have won the technique: %s and the technique: %s", techniques.name2, techniques.name3);
+      }
     });
   }
 }
